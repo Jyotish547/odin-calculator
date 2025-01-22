@@ -1,145 +1,94 @@
 console.log('Hello World');
 
-let container = document.getElementById('form-container');
-
+let container = document.getElementById('input-container');
 let display = document.getElementById('display');
 
-let inputArr = [];
-
-let displayValue = ''
-let firstValue;
-let secondValue;
-let resultValue;
+let displayValue = '';
+let firstValue = null;
+let currentOperation = null;
+let isNewInput = false;
 
 let add = document.querySelector('.addition');
 let subtract = document.querySelector('.subtraction');
 let multiply = document.querySelector('.multiplication');
 let divide = document.querySelector('.division');
+let equals = document.querySelector('.equals');
+let clear = document.querySelector('.clear');
+
+add.addEventListener('click', () => handleOperation('add'));
+subtract.addEventListener('click', () => handleOperation('subtract'));
+multiply.addEventListener('click', () => handleOperation('multiply'));
+divide.addEventListener('click', () => handleOperation('divide'));
+equals.addEventListener('click', handleEquals)
+clear.addEventListener('click', clearValue)
 
 let operations = [add, subtract, multiply, divide];
-
-for(i = 0; i < 10; i++) {
-    inputArr.push(i);
-}
-
-for(i = 0; i < 10; i++) {
-    let input = document.createElement('button');
-    input.classList.add('input-button');
-    input.textContent = inputArr[i];
-
-    input.addEventListener('click', inputDisplay);
-
-    container.appendChild(input);
-    console.log(input);
-}
-
-function inputDisplay(e) {
-    const value = e.target;
-    displayValue += value.textContent;
-    display.textContent = displayValue;
-}
-
-function inputSecondValue() {
-        firstValue = parseInt(display.textContent, 10);
-        console.log(firstValue);
-        displayValue = ''
-        display.textContent = displayValue;
-}
-
-function operate() {
-
-    if(add.classList.contains('selected')) {
-        secondValue = parseInt(display.textContent, 10);
-        console.log(secondValue);
-        resultValue = addition(firstValue, secondValue);
-        displayValue = resultValue;
-        display.textContent = displayValue;
-        for(i = 0; i < operations.length; i++) {
-            operations[i].classList.remove('selected');
-        }
-        return resultValue;
-    }
-
-    if(subtract.classList.contains('selected')) {
-        secondValue = parseInt(display.textContent, 10);
-        console.log(secondValue);
-        resultValue = subtraction(firstValue, secondValue);
-        displayValue = resultValue;
-        display.textContent = displayValue;
-        for(i = 0; i < operations.length; i++) {
-            operations[i].classList.remove('selected');
-        }
-        return resultValue;
-    }
-
-    if(multiply.classList.contains('selected')) {
-        secondValue = parseInt(display.textContent, 10);
-        console.log(secondValue);
-        resultValue = multiplication(firstValue, secondValue);
-        displayValue = resultValue;
-        display.textContent = displayValue;
-        for(i = 0; i < operations.length; i++) {
-            operations[i].classList.remove('selected');
-        }
-        return resultValue;
-    }
-
-    if(divide.classList.contains('selected')) {
-        secondValue = parseInt(display.textContent, 10);
-        console.log(secondValue);
-        resultValue = division(firstValue, secondValue);
-        displayValue = resultValue;
-        display.textContent = displayValue;
-        for(i = 0; i < operations.length; i++) {
-            operations[i].classList.remove('selected');
-        }
-        return resultValue;
-    }
-
-}
 
 operations.filter((e) => e.addEventListener('click', () => {
     e.classList.add('selected');
 }))
 
-function addition(a, b) {
-    
-    secondValue = parseInt(display.textContent, 10);
-    display.textContent = '';
-    return a + b;
+for(let i = 9; i >= 0; i--) {
+    let input = document.createElement('button');
+    input.classList.add('input-button');
+    input.textContent = i;
 
+    if(i === 0) {
+        input.classList.add('zero-button');
+    }
+
+    input.addEventListener('click', () => {
+        if(isNewInput) {
+            displayValue = '';
+            isNewInput = false;
+        }
+        displayValue += i;
+        display.textContent = displayValue;
+    });
+
+    container.appendChild(input);
 }
 
-function subtraction(a, b) {
+function handleOperation(operation) {
+    if(firstValue === null) {
+        firstValue = parseFloat(displayValue);
+    } else if (currentOperation) {
+        firstValue = calculate(firstValue, parseFloat(displayValue), currentOperation);
+    }
 
-    secondValue = parseInt(display.textContent, 10);
-    display.textContent = '';
-    return a - b;
-
+    currentOperation = operation;
+    isNewInput = true;
+    display.textContent = firstValue;
 }
 
-function multiplication(a, b) {
-
-    secondValue = parseInt(display.textContent, 10);
-    display.textContent = '';
-    return a * b;
-
-}
-
-function division(a, b) {
-
-    secondValue = parseInt(display.textContent, 10);
-    display.textContent = '';
-    return a / b;
-
+function handleEquals() {
+    if(currentOperation && displayValue) {
+        firstValue = calculate(firstValue, parseFloat(displayValue), currentOperation);
+        display.textContent = firstValue;
+        currentOperation = null;
+        displayValue = '';
+        isNewInput = true;
+    }
 }
 
 function clearValue() {
     displayValue = '';
+    currentOperation = null;
+    firstValue = null;
     display.textContent = '';
-    console.log('All inputs cleared');
-    for(i = 0; i < operations.length; i++) {
-        operations[i].classList.remove('selected');
+}
+
+function calculate(a, b, operation) {
+    switch (operation) {
+        case 'add':
+            return a + b;
+        case 'subtract':
+            return a - b;
+        case 'multiply':
+            return a * b;
+        case 'divide':
+            return b!== 0 ? a / b : `Oh yeah that's not gonna work now. Try something else`;
+        default:
+            return a;
     }
-    return;
 }

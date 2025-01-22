@@ -1,4 +1,88 @@
+html, body {
+    margin: 0;
+    padding: 25px 0;
+    background-color: #222222;
+}
+
 .selected {
-    background-color: blue;
     color: white;
+}
+
+#container {
+    width: 500px;
+    height: fit-content;
+    background-color: blue;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+button {
+    border: none;
+    width: 100%;
+    height: 100%;
+}
+
+#display {
+    background-color: rgb(48, 48, 48);
+    width: 500px;
+    height: 100px;
+    color: white;
+    display: flex;
+    align-items: end;
+    justify-content: start;
+    font-size: 40px;
+    padding: 0 0 15px 15px;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#input-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.input-button {
+    width: 125px;
+    height: 125px;
+    background-color: #494949;
+    border: 1px solid #989898;
+    color: white;
+    font-size: 30px;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    width: 125px;
+}
+
+.operation {
+    width: 125px;
+    background-color: #ffa500;
+    border: 1px solid #6240005d;
+    font-size: 40px;
+}
+
+.operation:hover {
+    background-color: #222222;
+    color: white;
+}
+
+.zero-button {
+    width: 100%;
+}
+
+.clear {
+    height: 50px;
+    background-color: red;
+    color: white;
+    font-size: 20px;
 }

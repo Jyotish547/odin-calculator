@@ -7,19 +7,26 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="display">
+    <div id="container">
+        <div id="display">
 
-    </div>
-    <div id="form-container">
+        </div>
         
-    </div>
-    <div class="button-container">
-        <button class="button addition" onclick="inputSecondValue()">(+) Add</button>
-        <button class="button subtraction" onclick="inputSecondValue()">(-) Subtract</button>
-        <button class="button multiplication" onclick="inputSecondValue()">(x) Multiply</button>
-        <button class="button division" onclick="inputSecondValue()">(/) Divide</button>
-        <button class="button equals" onclick="operate()">(=) Equals</button>
-        <button class="button clear" onclick="clearValue()">Clear</button>
+        <div class="form-container">
+            <div class="left-container">
+                <button class="clear">Clear</button>
+                <div id="input-container">
+                
+                </div>
+            </div>
+            <div class="button-container">
+                <button class="operation addition">+</button>
+                <button class="operation subtraction">-</button>
+                <button class="operation multiplication">x</button>
+                <button class="operation division">/</button>
+                <button class="operation equals">=</button>
+            </div>
+        </div>
     </div>
     <script src="script.js" defer></script>
 </body>
